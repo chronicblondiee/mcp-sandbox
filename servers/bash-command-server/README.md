@@ -4,11 +4,13 @@ A secure MCP server that allows execution of bash commands with comprehensive sa
 
 ## Features
 
+- **HTTP transport** - Web-accessible MCP server (default on port 8000)
 - **Security-first design** with command filtering, timeouts, and validation
 - **FastMCP 2.0 compliant** with proper async/await implementation
 - **Three MCP tools**: `execute_bash`, `list_safe_commands`, `get_security_info`
 - **Comprehensive error handling** and logging
 - **Working directory support** with validation
+- **Flexible transport** - Supports both HTTP and stdio transports
 
 ## Security Features
 
@@ -21,12 +23,29 @@ A secure MCP server that allows execution of bash commands with comprehensive sa
 
 ## Quick Start
 
+### HTTP Transport (Default)
+
 ```bash
-# Start the server
+# Start the server with HTTP transport on default port 8000
 ./start_server.sh
 
+# Or with custom port
+./start_server.sh --port 9000
+
 # Or manually
-uv run python src/bash_command_server.py
+uv run python src/bash_command_server.py --port 8000 --transport http
+
+# Server will be available at: http://127.0.0.1:8000/mcp
+```
+
+### Stdio Transport (Legacy)
+
+```bash
+# Start with stdio transport
+./start_server.sh --transport stdio
+
+# Or manually
+uv run python src/bash_command_server.py --transport stdio
 ```
 
 ## Testing

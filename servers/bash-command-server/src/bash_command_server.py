@@ -268,5 +268,20 @@ async def get_security_info() -> Dict[str, Any]:
     }
 
 if __name__ == "__main__":
-    # Run the server
-    mcp.run()
+    # Run the server with HTTP transport
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="FastMCP 2.0 Bash Command Server")
+    parser.add_argument("--port", type=int, default=8000, help="HTTP port to listen on (default: 8000)")
+    parser.add_argument("--host", type=str, default="127.0.0.1", help="Host to bind to (default: 127.0.0.1)")
+    parser.add_argument("--transport", type=str, choices=["http", "stdio"], default="http", 
+                       help="Transport type (default: http)")
+    
+    args = parser.parse_args()
+    
+    if args.transport == "http":
+        logger.info(f"Starting Bash Command Server on http://{args.host}:{args.port}")
+        mcp.run(transport="http", port=args.port, host=args.host)
+    else:
+        logger.info("Starting Bash Command Server with stdio transport")
+        mcp.run()
