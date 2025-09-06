@@ -1,0 +1,32 @@
+{
+  "name": "bash-command-server",
+  "description": "FastMCP 2.0 server for safe bash command execution",
+  "version": "1.0.0",
+  "server": {
+    "command": "uv",
+    "args": ["run", "python", "bash_command_server.py"],
+    "cwd": "/home/brown/ai-sandbox/mcp-sandbox"
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "execute_bash",
+        "description": "Execute bash commands safely with security restrictions"
+      },
+      {
+        "name": "list_safe_commands", 
+        "description": "Get examples of safe commands that can be executed"
+      },
+      {
+        "name": "get_security_info",
+        "description": "Get information about security measures in place"
+      }
+    ]
+  },
+  "security": {
+    "max_command_length": 1000,
+    "timeout_seconds": 30,
+    "blocked_commands": ["rm", "sudo", "shutdown", "format"],
+    "environment_isolation": true
+  }
+}

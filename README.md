@@ -1,0 +1,120 @@
+# MCP Sandbox
+
+A sandbox repository for developing Model Context Protocol (MCP) servers using FastMCP 2.0 and Python with uv package management.
+
+## Repository Structure
+
+```
+mcp-sandbox/
+├── servers/                    # MCP server implementations
+│   ├── bash-command-server/    # Secure bash command execution server
+│   └── templates/              # Server templates for new projects
+├── clients/                    # MCP client examples and utilities
+├── examples/                   # General usage examples
+├── tools/                      # Development tools and utilities
+├── docs/                       # Documentation
+│   └── fastmcp-2.0.md         # FastMCP 2.0 reference
+├── .claude/                    # Claude Code configuration
+│   └── agents/
+│       └── mcp-server-builder.md  # Specialized MCP development agent
+├── pyproject.toml              # uv project configuration
+├── CLAUDE.md                   # Project instructions
+└── README.md                   # This file
+```
+
+## Available Servers
+
+### Bash Command Server
+A secure FastMCP 2.0 server for executing bash commands with comprehensive safety measures.
+
+**Location**: `servers/bash-command-server/`
+
+**Features**:
+- **HTTP transport** - Web-accessible on port 8000
+- Security-first design with command filtering
+- 30-second execution timeout
+- Working directory support
+- Comprehensive error handling
+- Flexible transport options (HTTP/stdio)
+
+**Quick Start**:
+```bash
+cd servers/bash-command-server
+./start_server.sh
+
+# Server available at: http://127.0.0.1:8000/mcp
+# Test with: python ../../clients/http_client_example.py
+```
+
+## Development Environment
+
+- **Python Package Manager**: uv (modern Python package manager)
+- **Target Framework**: FastMCP 2.0 for building context protocol servers
+- **License**: MIT License
+
+## Getting Started
+
+### Creating a New MCP Server
+
+1. Use the mcp-server-builder agent in Claude Code
+2. Initialize with uv: `uv init --lib <server-name>`
+3. Add FastMCP dependency: `uv add fastmcp`
+4. Follow the FastMCP 2.0 patterns in existing servers
+
+### Common Commands
+
+```bash
+# Initialize new MCP server project
+uv init --lib <server-name>
+
+# Install MCP dependencies
+uv add fastmcp
+
+# Run MCP server (typical pattern)
+uv run python -m <server-module>
+
+# Install development dependencies
+uv add --dev pytest ruff mypy
+
+# Run tests
+uv run pytest
+
+# Code formatting and linting
+uv run ruff check
+uv run ruff format
+uv run mypy .
+```
+
+## FastMCP 2.0
+
+This repository uses FastMCP 2.0, a comprehensive framework for building MCP servers and clients. Key features:
+
+- **Simple API**: Decorate functions with `@mcp.tool` to create MCP tools
+- **Pythonic**: Natural Python development patterns
+- **Complete ecosystem**: Deployment, auth, clients, testing, and production tools
+- **Beyond basic MCP**: Server composition, REST API generation, dynamic tool rewriting
+
+Basic usage pattern:
+```python
+from fastmcp import FastMCP
+
+mcp = FastMCP("Server Name")
+
+@mcp.tool
+def your_function(param: type) -> return_type:
+    """Function description"""
+    return result
+
+if __name__ == "__main__":
+    mcp.run(transport="http", port=8000)
+```
+
+## Documentation
+
+- [FastMCP 2.0 Reference](docs/fastmcp-2.0.md) - Complete framework documentation
+- [Server Documentation](servers/) - Individual server documentation in each directory
+- [Claude Code Configuration](CLAUDE.md) - Project-specific instructions
+
+## License
+
+MIT License
